@@ -1,4 +1,4 @@
-# Trump Tweet+Stock Market Tracker
+#Trump Tweet+Stock Market Tracker
 
 Current plans include:
   Implement

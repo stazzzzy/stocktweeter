@@ -1,0 +1,242 @@
+# https://circleci.com/docs/2.0/configuration-reference
+
+version: 2.1
+
+
+aliases:
+  - &restore-node-modules-cache
+      name: Restore node_modules cache
+      keys:
+        - &cache-key v1-dependencies-{{ checksum "package.json" }}-{{ checksum "tests/e2e/package.json" }}
+
+  - &save-node-modules-cache
+      name: Save node_modules cache
+      paths:
+        - node_modules
+        - tests/e2e/node_modules
+      key: *cache-key
+
+  - &default-filters
+      tags:
+        ignore:
+          - /.*/
+
+  - &merge-based-filters
+      <<: *default-filters
+      branches:
+        ignore:
+          - master
+          - /release\/.*/
+
+
+executors:
+  node-latest-executor:
+    docker:
+      - image: circleci/node:10
+
+  node-browsers-latest-executor:
+    docker:
+      - image: circleci/node:10-browsers
+
+
+commands:
+  checkout-with-deps:
+    description: "Checkout the code with restore npm dependencies"
+    steps:
+      - checkout
+      - restore_cache: *restore-node-modules-cache
+
+  run-graphics-tests:
+    description: "Run graphics tests with specific devicePixelRatio"
+    parameters:
+      devicePixelRatio:
+        type: string
+    steps:
+      - checkout-with-deps
+      - run:
+          name: "Setup Environment Variables"
+          command: |
+            echo 'export NO_SANDBOX="true"' >> $BASH_ENV
+            echo 'export CMP_OUT_DIR="./graphics-cmp-data"' >> $BASH_ENV
+            echo 'export TESTS_REPORT_FILE="test-results/graphics/results.xml"' >> $BASH_ENV
+            echo 'export DEVICE_PIXEL_RATIO=<< parameters.devicePixelRatio >>' >> $BASH_ENV
+      - run: scripts/run-graphics-tests.sh
+      - store_test_results:
+          path: test-results/
+      - store_artifacts:
+          path: ./graphics-cmp-data
+          when: on_fail
+
+
+jobs:
+  install-deps:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - run: npm install
+      - save_cache: *save-node-modules-cache
+
+  build:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - run: npm run tsc-all
+
+      # make sure that the project is compiled with non-composite project
+      # it doesn't output anything, but is used by IDE or tools
+      - run: ./node_modules/.bin/tsc -p tsconfig.json
+
+      - run: npm run build:prod
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - lib
+            - dist
+
+  no-crlf:
+    executor: node-latest-executor
+    steps:
+      - checkout
+      - run: scripts/no-crlf.sh
+
+  trailing-lf:
+    executor: node-latest-executor
+    steps:
+      - checkout
+      - run: scripts/trailing-newlines.sh
+
+  eslint:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - run: npm run lint:eslint
+
+  tslint:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - run: npm run lint:tslint
+
+  markdown:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - run: npm run lint:md
+      - run: npm run check-markdown-links
+
+  unittests:
+    executor: node-latest-executor
+    environment:
+      TESTS_REPORT_FILE: "test-results/unittests/results.xml"
+    steps:
+      - checkout-with-deps
+      - run: npm run test
+      - store_test_results:
+          path: test-results/
+
+  dts-changes:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - run: scripts/check-dts-changes.sh ./dts-changes $(git merge-base origin/master HEAD) $(git rev-parse HEAD)
+      - store_artifacts:
+          path: ./dts-changes
+          when: on_fail
+
+  graphics-tests-dpr1_0:
+    executor: node-browsers-latest-executor
+    steps:
+      - run-graphics-tests:
+          devicePixelRatio: "1.0"
+
+  graphics-tests-dpr1_5:
+    executor: node-browsers-latest-executor
+    steps:
+      - run-graphics-tests:
+          devicePixelRatio: "1.5"
+
+  graphics-tests-dpr2_0:
+    executor: node-browsers-latest-executor
+    steps:
+      - run-graphics-tests:
+          devicePixelRatio: "2.0"
+
+
+  memleaks-tests:
+    executor: node-browsers-latest-executor
+    environment:
+      NO_SANDBOX: "true"
+      TESTS_REPORT_FILE: "test-results/memleaks/results.xml"
+    steps:
+      - checkout-with-deps
+      - attach_workspace:
+          at: ./
+      - run: scripts/run-memleaks-tests.sh
+      - store_test_results:
+          path: test-results/
+
+  codechecks:
+    executor: node-latest-executor
+    steps:
+      - checkout-with-deps
+      - attach_workspace:
+          at: ./
+      - run: npm run codechecks
+
+workflows:
+  version: 2
+
+  build-lint-test:
+    jobs:
+      - install-deps:
+          filters: *default-filters
+      - no-crlf:
+          filters: *default-filters
+      - trailing-lf:
+          filters: *default-filters
+
+      - build:
+          filters: *default-filters
+          requires:
+            - install-deps
+      - eslint:
+          filters: *default-filters
+          requires:
+            - install-deps
+      - tslint:
+          filters: *default-filters
+          requires:
+            - install-deps
+      - markdown:
+          filters: *default-filters
+          requires:
+            - install-deps
+
+      - codechecks:
+          filters: *default-filters
+          requires:
+            - build
+      - unittests:
+          filters: *default-filters
+          requires:
+            - build
+      - dts-changes:
+          filters: *merge-based-filters
+          requires:
+            - build
+      - graphics-tests-dpr1_0:
+          filters: *merge-based-filters
+          requires:
+            - build
+      - graphics-tests-dpr1_5:
+          filters: *merge-based-filters
+          requires:
+            - build
+      - graphics-tests-dpr2_0:
+          filters: *merge-based-filters
+          requires:
+            - build
+      - memleaks-tests:
+          filters: *default-filters
+          requires:
+            - build

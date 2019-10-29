@@ -1,0 +1,76 @@
+<!doctype html>
+<head>
+   <!-- Plotly.js -->
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <!-- JQuery.js -->
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+   <script src="ticker_input.js"></script>
+   <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
+</head>
+<title>Trump Tweet Stock Tracker</title>
+<style>
+  * {
+    box-sizing: border-box; 
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    margin: 0;
+  }
+  .col-1 {
+    background: #2F3333;
+    flex: .5;
+  }
+  .col-2 {
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+  }
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+  .content > article {
+    flex: 4;
+    min-height: 60vh;
+  }
+  header, footer {
+    background: #949999;
+    height: 10vh;
+  }
+  header, footer, article, nav {
+    padding: 1em;
+  }
+</style>
+<body>
+  <nav class="col-1">
+  <div style="color:white;" class="info">
+	  Ticker:
+	  <script>
+		$.getJSON('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=L0DDAMG0NGJFSJEY', function(data) { 
+			var text = `Ticker: ${data['Meta Data']["2. Symbol"]}<br>
+						T-Zone: ${data['Meta Data']["6. Time Zone"]}`
+			
+			$(".info").html(text);
+		});
+	  </script>
+  </div>
+	  <div id="textenter">
+		<form action="javascript:getticker(document.getElementsByName('ticker'))" style="color:white;">
+			Ticker:<br>
+			<input type="text" name="ticker"><br>
+			<input type="submit" value="Submit">
+		</form> 
+	  </div>
+  </nav>
+  <div id= "header" class="col-2">
+  	<header>Trump Tweet Stock Tracker</header>
+    <main class="content"></main>
+	<div id="chart" class="col-2">
+	<script src="main_chart.js"></script>
+	</div>
+  </div>
+
+</body>

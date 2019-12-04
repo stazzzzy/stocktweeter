@@ -183,6 +183,14 @@ areaSeries.setData([
 function set_chart_data(req_url) {
 	$.getJSON(req_url, function(data){
 		var price = data['Time Series (5min)'];
+		var size = Object.keys(price).length;
 		console.log(price);
+		var price_list = [];
+		for(var key in price) {
+			let p = price[key].toString().split(" ");
+			console.log();
+			let pi = price[key]['4. close'];
+			price_list.push({"p[1]" : pi});
+		}
 	});
 }

@@ -1,8 +1,5 @@
-<!-- DJ Was Here testing push and commit-->
 <!doctype html>
 <head>
-   <!-- Plotly.js -->
-   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
    <!-- JQuery.js -->
    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
    <script src="ticker_input.js"></script>
@@ -12,7 +9,7 @@
 <title>Trump Tweet Stock Tracker</title>
 <style>
   * {
-    box-sizing: border-box; 
+    box-sizing: border-box;
   }
   body {
     display: flex;
@@ -50,10 +47,10 @@
   <div style="color:white;" class="info">
 	  Ticker:
 	  <script>
-		$.getJSON('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=L0DDAMG0NGJFSJEY', function(data) { 
+		$.getJSON('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=L0DDAMG0NGJFSJEY', function(data) {
 			var text = `Ticker: ${data['Meta Data']["2. Symbol"]}<br>
 						T-Zone: ${data['Meta Data']["6. Time Zone"]}`
-			
+
 			$(".info").html(text);
 		});
 	  </script>
@@ -63,7 +60,7 @@
 			Ticker:<br>
 			<input type="text" name="ticker"><br>
 			<input type="submit" value="Submit">
-		</form> 
+		</form>
 	  </div>
   </nav>
   <div id= "header" class="col-2">

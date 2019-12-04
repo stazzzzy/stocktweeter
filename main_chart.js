@@ -180,3 +180,9 @@ areaSeries.setData([
 	{ time: '2019-05-28', value: 81.10 },
 ]);
 
+function set_chart_data(req_url) {
+	$.getJSON(req_url, function(data){
+		var price = data['Time Series (5min)'];
+		console.log(price);
+	});
+}

@@ -56,9 +56,9 @@
 	  </script>
   </div>
 	  <div id="textenter">
-		<form action="javascript:getticker(document.getElementsByName('ticker'))" style="color:white;">
+		<form action="javascript:getticker(document.getElementById('ticker').value)" style="color:white;">
 			Ticker:<br>
-			<input type="text" name="ticker"><br>
+			<input type="text" id="ticker"><br>
 			<input type="submit" value="Submit">
 		</form>
 	  </div>

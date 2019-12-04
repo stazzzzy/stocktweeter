@@ -5,4 +5,4 @@ Current plans include:
   - Linked embedded tweets
   - Graph overhaul
   - Create a simplistic HTML layout
-  - Major backend development in JS or Angular.JS
+  - Major backend development in JS

@@ -6,12 +6,8 @@ console.log('The bot is starting'); //just some output to see that the code has 
 
 var Twit = require('twit'); // twit is from TwitterOAuth, it begins the requests from twitter api using the keys below
 
-var T = new Twit({
-  consumer_key:         'SHl26na5bOXi5ezojsMnmY5d2',
-  consumer_secret:      'gQfWRJ5JpBfp7VBWE53MBEL6hUFAIuIUVuKmqjvg4rWxFtnTiW',
-  access_token:         '785901517-fgDYo5u4iYbaUZWFdgiuiQe8Xg9vesE3KLy9jfhM',
-  access_token_secret:  'KEPLfajhjzmhcJQ131zw3VBa3lfAZoK8J7OhJZIweb2Nq'
-})
+var config = require('./config');
+var T = new Twit(config);
 
 
 //Parameters for the get request from twitter api

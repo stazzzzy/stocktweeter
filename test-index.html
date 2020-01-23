@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- ,shrink-to-fit=no"> -->
+
+    <!-- Bootstrap CSS --> 
+    <!-- Latest compiled and minified CSS -->
+	<!-- <link rel="stylesheet" href="bootstrap-4.4.1-dist/css/bootstrap.css"> -->
+	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<!-- JQuery.js -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+   	<script src="ticker_input.js"></script>
+   	<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
+	<title>Trump Tweet Stock Tracker</title>
+</head>
+
+<body>
+<div class="container-fluid">
+<div class="row">
+<!-- Left, Toolbar -->
+<!-- Ticker Input -->
+  	<div class="col-2" >
+  	<div style="color:white;" class="info">
+	  <script src = 'ticker_input.js'></script>
+  	</div>	
+  	<form action="javascript:getticker(document.getElementById('ticker').value)" style="color:white;">
+		<br>Ticker:
+		<input type="text" id="ticker"><br>
+		<input type="submit" value="Submit">
+	</form>
+<!-- Display Trump's Twitter limeline -->
+	<div class="trumptimeline">
+		<a class="twitter-timeline" data-width="flex" data-theme="dark" data-height="600" href="https://twitter.com/realDonaldTrump?ref_src=twsrc%5Etfw">
+        Tweets by @realDonaldTrump </a>
+      	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  	</div>
+  	</div>
+
+<!-- Right, Title and Chart -->
+  	<div id="chart" class="col-10" style="padding: 0px">
+  		<header class="chart-header">Trump Tweet Stock Tracker</header>
+  		<script type="text/javascript" src="display-chart.js"></script>
+  		<script src="main_chart.js"></script>
+  	</div>
+
+
+</div>
+</div>
+  <!-- </div> -->
+
+	
+<!-- Scripts needed -->
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<!-- Bootstrap CDN -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </div>
+</body>
+</html>

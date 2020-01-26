@@ -17,8 +17,8 @@ const chart = LightweightCharts.createChart(document.getElementById("chart"),
 	timeScale: {
 		borderColor: 'rgba(255, 255, 255, 0.8)',
 	},
-	width: 1191,
-	height: 680 
+	width: 1300,
+	height: 680
 });
 
 const areaSeries = chart.addAreaSeries({

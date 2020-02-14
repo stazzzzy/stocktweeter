@@ -3,8 +3,9 @@
    <!-- JQuery.js -->
    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
    <script src="ticker_input.js"></script>
-   <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-
+   <script src="trumpbot.js"></script>
+   <script src="node_modules\moment\moment.js"></script>
+   <script src="node_modules\chart.js\dist\Chart.js"></script>
 </head>
 <title>Trump Tweet Stock Tracker</title>
 <style>
@@ -17,10 +18,22 @@
     flex-direction: row;
     margin: 0;
   }
+  .nav {
+    background: #292F33;
+    flex: .9;
+    padding: 0px;
+  }
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0px;
+  }
   .col-1 {
-    background: #2F3333;
-    flex: .5;
-    width: 25%
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5%;
   }
   .col-2 {
     display: flex;
@@ -46,20 +59,22 @@
 
 </style>
 <body>
-  <nav class="col-1">
-  <div style="color:white;" class="info">
-	  <script src = 'ticker_input.js'></script>
+  <nav class="nav">
+  <div style="color:white;" class="col-1">
+    <script language="javascript">
+	  getticker("SPY");
+  </script>
   </div>
-	  <div id="textenter">
-		<form action="javascript:getticker(document.getElementById('ticker').value)" style="color:white;">
-			Ticker:<br>
-			<input type="text" id="ticker"><br>
-			<input type="submit" value="Submit">
-		</form>
+	  <div id="textenter" class="col-1">
+  		<form action="javascript:getticker(document.getElementById('ticker').value)" style="color:white;">
+  			Ticker:<br>
+  			<input type="text" id="ticker"><br>
+  			<input type="submit" value="Submit">
+		  </form>
 	  </div>
 
 <!--div container to add trump's twitter timeline under the search bar.-->
-    <div id="trumptimeline">
+    <div id="trumptimeline" class="timeline">
       <a class="twitter-timeline" data-width="flex" data-height="600" data-theme="dark" href="https://twitter.com/realDonaldTrump?ref_src=twsrc%5Etfw">
         Tweets by @realDonaldTrump
       </a>
@@ -70,7 +85,8 @@
   	<header>Trump Tweet Stock Tracker</header>
     <main class="content"></main>
 	<div id="chart" class="col-2">
-	<script src="main_chart.js"></script>
+	  <canvas id="myChart"></canvas>
+	  <script src="main_chart.js"></script>
 	</div>
   </div>
 </body>

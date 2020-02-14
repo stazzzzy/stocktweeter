@@ -6,7 +6,7 @@ function getticker(string){
 			console.log(string);
 			var text = `Ticker: ${data['Meta Data']["2. Symbol"]}<br>
 						T-Zone: ${data['Meta Data']["6. Time Zone"]}`
-			$(".info").html(text); // Append JSON text to site HTML
+			$("#textenter").append(text); // Append JSON text to site HTML
 
 			set_chart_data(req);
 		});

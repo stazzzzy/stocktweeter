@@ -7,7 +7,6 @@ var chart = new Chart(ctx, {
     data: {
         labels: '',
         datasets: [{
-            label: 'My First dataset',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: '',
@@ -29,7 +28,15 @@ var chart = new Chart(ctx, {
 					maxTicksLimit: 20
 				}
 			}]
-		}
+		},
+		tooltipTemplate: "<%= value %>",
+
+		showTooltips: true,
+
+		onAnimationComplete: function() {
+		this.showTooltip(this.datasets[0].points, true);
+		},
+		tooltipEvents: []
 	}
 });
 
@@ -41,11 +48,24 @@ function addData(chart, label, data) { //this function pushes data to the actual
     chart.update();
 }
 
+function removeData(chart) {
+    chart.data.datasets.forEach((dataset) => {
+		let size = dataset.data.length;
+		for(var i = 0; i<size; i++) {
+			dataset.data.pop();
+			chart.data.labels.pop();
+
+		}
+    });
+    chart.update();
+}
+
 function set_chart_data(req_url) {
 	$.getJSON(req_url, function(data){ 				// Retrieve JSON data from the specified ticker
 		var price = data['Time Series (Daily)'];	// Price is all the pricepoints for their given date and time
 		console.log(price);							// 
 		var price_list = [];						// We need to get all the "close" prices, so we will create a new list and append here
+		removeData(chart);
 		for(var key in price) {						// Here, key is essentially the date/time in the list of all the dates and their respective prices
 			
 			let pi = price[key]['4. close'];											// pi is our close price

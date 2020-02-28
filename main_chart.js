@@ -8,8 +8,8 @@ var chart = new Chart(ctx, {
     data: {
         labels: '',
         datasets: [{
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(0, 172, 237, 0.3)',
+            borderColor: 'rgb(0, 172, 237)',
             data: '',
 			pointBackgroundColor: pointBackgroundColor,
 			pointBorderColor: pointBorderColor

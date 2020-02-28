@@ -2,7 +2,7 @@
   "name": "npm_demo",
   "version": "1.0.0",
   "description": "I am demonstrating npm",
-  "main": "bot.js",
+  "main": "trumpbot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

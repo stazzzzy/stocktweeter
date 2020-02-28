@@ -1,19 +1,21 @@
 var ctx = document.getElementById('myChart').getContext('2d');
+var pointBackgroundColor = [],
+	pointBorderColor = [];
 var chart = new Chart(ctx, {
     // The type of chart we want to create, obviously
     type: 'line',
-
-    // The data for our dataset
+    // The data for our dataset (We only have one here)
     data: {
         labels: '',
         datasets: [{
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: '',
+			pointBackgroundColor: pointBackgroundColor,
+			pointBorderColor: pointBorderColor
         }]
     },
 	
-
     // Configuration options go here
     options: {
 		scales: {
@@ -29,6 +31,9 @@ var chart = new Chart(ctx, {
 				}
 			}]
 		},
+		legend: {
+            display: false
+        },
 		tooltipTemplate: "<%= value %>",
 
 		showTooltips: true,
@@ -44,7 +49,9 @@ function addData(chart, label, data) { //this function pushes data to the actual
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => { 
         dataset.data.push(data);			//push data to array
-    });
+		pointBackgroundColor.push('transparent');
+		pointBorderColor.push('black');
+	});
     chart.update();
 }
 
@@ -54,7 +61,8 @@ function removeData(chart) {
 		for(var i = 0; i<size; i++) {
 			dataset.data.pop();
 			chart.data.labels.pop();
-
+			pointBackgroundColor.pop();
+			pointBorderColor.pop();
 		}
     });
     chart.update();

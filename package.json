@@ -2,7 +2,7 @@
   "name": "npm_demo",
   "version": "1.0.0",
   "description": "I am demonstrating npm",
-  "main": "bot.js",
+  "main": "trumpbot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,7 @@
   "author": "DJ",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^2.9.3",
     "twit": "^2.2.11"
   }
 }

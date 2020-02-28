@@ -27,6 +27,6 @@ function gotData(err, data, response) {
   var tweets = data; // this creates a variable that stores all of the data for a tweet from the timeline
   for (var i=0; i<tweets.length;i++){ // the for loop cycles through all of the tweets that are collected from the timeline
     // the console outputs the text from the tweet, the tweet's creation date and the tweet's ID
-    console.log(tweets[i].text + '---' + tweets[i].created_at + '---' + tweets[i].id);
+    console.log(tweets[i].created_at);
   }
 }

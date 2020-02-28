@@ -31,20 +31,6 @@ var chart = new Chart(ctx, {
 				}
 			}]
 		},
-		horzLines: {
-			color: 'rgba(255, 255, 255, 0.2)',
-		},
-	},
-	priceScale: {
-		borderColor: 'rgba(255, 255, 255, 0.8)',
-	},
-	timeScale: {
-		borderColor: 'rgba(255, 255, 255, 0.8)',
-	},
-	width: 1300,
-	height: 680
-});
-
 		legend: {
             display: false
         },

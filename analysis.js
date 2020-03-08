@@ -20,11 +20,9 @@ function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 =
 	}
 }
 	
-let tweets = "tweets.json";
 
-console.log(tweets[0].text);
-
-$.getJSON("tweets.json", function(data) {
-			console.log(data);
+$.getJSON("https://firebasestorage.googleapis.com/v0/b/tweetdata-f8f42.appspot.com/o/tweets.json?alt=media&token=e2ce4a33-6996-4c54-84bb-1b6737b8b2f6", function(data) {
+			console.log("Test here");
+			console.log(data[0].created_at);
 
 		});

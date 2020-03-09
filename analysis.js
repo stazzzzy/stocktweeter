@@ -11,27 +11,6 @@
 	// if(DecimalChange >= threshold)
 	//   add marker on chart with embedded tweet
 	
-//TEST CASE:
-test_trump_tweet_dates = ['2020-03-02', '2020-03-03', '2020-03-04', '2020-03-05'];
-function test_case(time_series, threshold){
-	for(key in time_series){ 									// for each day in time_series,
-		for(i = 0; i<test_trump_tweet_dates; i++){				// we have to check if Trump tweeted on that day
-			if(test_trump_tweet_dates[i] === key){				// if the trump_tweet[i] == key (key = date from time series)
-				let current = time_series[key]["value"];		// current is set to the value("price") from time_series
-				let next_day = time_series[key+1]["value"];		// then we have to move to the next day in the time series
-			}
-			console.log(current);
-			console.log(next_day);
-		}
-		DecimalChange = (next_day - current) / current;
-		if(DecimalChange >= threshold){
-			console.log('add marker');
-			// add marker to the chart at current key/value pair.
-		}
-	}
-}
-
-
 function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 = 5%) time_series is an array of key value pairs
 	var flagged = []; 				 // Array of times that will have a trump tweet linked to them
 	

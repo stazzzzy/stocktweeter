@@ -20,7 +20,7 @@ function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 =
 	}
 }
 	
-
+//tweets.JSON is hosted on Firebase, this function will retrieve the tweets stored there
 $.getJSON("https://firebasestorage.googleapis.com/v0/b/tweetdata-f8f42.appspot.com/o/tweets.json?alt=media&token=e2ce4a33-6996-4c54-84bb-1b6737b8b2f6", function(data) {
 			console.log("Test here");
 			console.log(data[0].created_at);

@@ -25,4 +25,10 @@ $.getJSON("https://firebasestorage.googleapis.com/v0/b/tweetdata-f8f42.appspot.c
 			console.log("Test here");
 			console.log(data[0].created_at);
 
+
+			let current_datetime = new Date(data[0].created_at); // Collect date (string) from Firebase, convert to Javascript Date format
+			//console.log(current_datetime);
+			let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate()// format the date to be YYYY/MM/DD
+			console.log(formatted_date)
+
 		});

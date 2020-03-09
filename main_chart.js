@@ -82,5 +82,6 @@ function set_chart_data(req_url) {
 			addData(chart,key.toString().split(" ")[0],pi); // we do not even need the key value pairs anymore
 		}																				
 		console.log(price_list);
+		a(price_list, 0.01);
 	});
 }

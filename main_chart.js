@@ -1,5 +1,6 @@
 var ctx = document.getElementById('myChart').getContext('2d');
 var pointBackgroundColor = [],
+	pointStyle = [],
 	pointBorderColor = [];
 var chart = new Chart(ctx, {
     // The type of chart we want to create, obviously
@@ -12,7 +13,8 @@ var chart = new Chart(ctx, {
             borderColor: 'rgb(0, 172, 237)',
             data: '',
 			pointBackgroundColor: pointBackgroundColor,
-			pointBorderColor: pointBorderColor
+			pointBorderColor: pointBorderColor,
+			pointStyle: pointStyle
         }]
     },
 	
@@ -49,6 +51,7 @@ function addData(chart, label, data) { //this function pushes data to the actual
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => { 
         dataset.data.push(data);			//push data to array
+		pointStyle.push('cross');
 		pointBackgroundColor.push('transparent');
 		pointBorderColor.push('black');
 	});
@@ -61,6 +64,7 @@ function removeData(chart) {
 		for(var i = 0; i<size; i++) {
 			dataset.data.pop();
 			chart.data.labels.pop();
+			pointStyle.pop();
 			pointBackgroundColor.pop();
 			pointBorderColor.pop();
 		}
@@ -83,5 +87,14 @@ function set_chart_data(req_url) {
 		}																				
 		console.log(price_list);
 		a(price_list, 0.01);
+		image = new Image();
+		
+		image.src = 'head.png';
+		image.setAttribute('width','30px');
+		image.setAttribute('height','30px');
+		pointStyle[20] = image;
+		//pointBorderColor[20] = "red";
+		//pointBackgroundColor[20] = "red";
+		chart.update();
 	});
 }

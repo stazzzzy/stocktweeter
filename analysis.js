@@ -49,8 +49,11 @@ function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 =
 		});
 
 	for (var key in time_series) {
-		let cur = time_series[key];
-		let next = time_series[key+1];
+		let cur = time_series[key].value;
+		let next = time_series[key+1].value;
+
+		console.log(cur);
+		console.log(next);
 	}
 }
 

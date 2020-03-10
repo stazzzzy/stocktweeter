@@ -112,6 +112,7 @@ function set_chart_data(req_url) {
 		}																				
 		console.log(price_list);
 		a(price_list, 0.01);
+<<<<<<< HEAD
 		image = new Image();
 		image.src = 'head.png';
 		image.setAttribute('width','30px');
@@ -120,7 +121,18 @@ function set_chart_data(req_url) {
 		//pointBorderColor[20] = "red";
 		//pointBackgroundColor[20] = "red";
 		chart.update();
+=======
+>>>>>>> 845dfd48295b47f03a0dc284fbe70ca142ae74da
 	});
 }
 
-
+function addTrump(index){
+	image = new Image();
+	image.src = 'head.png';
+	image.setAttribute('width','30px');
+	image.setAttribute('height','30px');
+	pointStyle[index] = image;
+	//pointBorderColor[20] = "red";
+	//pointBackgroundColor[20] = "red";
+	chart.update();
+}

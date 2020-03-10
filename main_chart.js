@@ -1,6 +1,7 @@
 var ctx = document.getElementById('myChart').getContext('2d');
 var pointBackgroundColor = [],
 	pointStyle = [],
+	showTooltips = [],
 	pointBorderColor = [];
 var chart = new Chart(ctx, {
     // The type of chart we want to create, obviously
@@ -33,6 +34,31 @@ var chart = new Chart(ctx, {
 				}
 			}]
 		},
+		tooltips: {
+			enabled: true,
+			filter: function(tooltipItem, data) { //Filter tooltips, if point is a donald trump head, do not show vanilla tooltip
+				var point = data.datasets[0].pointStyle[tooltipItem.index];
+				if(point == image) {
+					return false
+				}
+				else{
+					return true
+				}
+			},
+			custom: function(tooltipModel) {
+				var tooltipEl = document.getElementById('chartjs-tooltip');
+				if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-tooltip';
+                    tooltipEl.innerHTML = '<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ';
+                    twttr.widgets.load() //Initialize twitter widget to style correctly
+					document.body.appendChild(tooltipEl);
+                }
+				
+				
+			}
+			
+		},
 		legend: {
             display: false
         },
@@ -51,6 +77,7 @@ function addData(chart, label, data) { //this function pushes data to the actual
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => { 
         dataset.data.push(data);			//push data to array
+		showTooltips.push(true);
 		pointStyle.push('cross');
 		pointBackgroundColor.push('transparent');
 		pointBorderColor.push('black');
@@ -88,13 +115,16 @@ function set_chart_data(req_url) {
 		console.log(price_list);
 		a(price_list, 0.01);
 		image = new Image();
-		
 		image.src = 'head.png';
 		image.setAttribute('width','30px');
 		image.setAttribute('height','30px');
 		pointStyle[20] = image;
+		showTooltips[20] = false;
+		console.log(showTooltips);
 		//pointBorderColor[20] = "red";
 		//pointBackgroundColor[20] = "red";
 		chart.update();
 	});
 }
+
+

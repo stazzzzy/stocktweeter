@@ -1,7 +1,6 @@
 var ctx = document.getElementById('myChart').getContext('2d');
 var pointBackgroundColor = [],
 	pointStyle = [],
-	showTooltips = [],
 	pointBorderColor = [];
 var chart = new Chart(ctx, {
     // The type of chart we want to create, obviously
@@ -77,7 +76,6 @@ function addData(chart, label, data) { //this function pushes data to the actual
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => { 
         dataset.data.push(data);			//push data to array
-		showTooltips.push(true);
 		pointStyle.push('cross');
 		pointBackgroundColor.push('transparent');
 		pointBorderColor.push('black');
@@ -119,8 +117,6 @@ function set_chart_data(req_url) {
 		image.setAttribute('width','30px');
 		image.setAttribute('height','30px');
 		pointStyle[20] = image;
-		showTooltips[20] = false;
-		console.log(showTooltips);
 		//pointBorderColor[20] = "red";
 		//pointBackgroundColor[20] = "red";
 		chart.update();

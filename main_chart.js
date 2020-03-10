@@ -35,27 +35,50 @@ var chart = new Chart(ctx, {
 		},
 		tooltips: {
 			enabled: true,
-			filter: function(tooltipItem, data) { //Filter tooltips, if point is a donald trump head, do not show vanilla tooltip
+			filter: function(tooltipItem, data) { //Filter tooltips, if point is a donald trump head (IMG), do not show pre-built tooltip
 				var point = data.datasets[0].pointStyle[tooltipItem.index];
-				if(point == image) {
+				if(point.tagName == "IMG") {
 					return false
 				}
 				else{
 					return true
 				}
 			},
-			custom: function(tooltipModel) {
+			custom: function(tooltip) {
 				var tooltipEl = document.getElementById('chartjs-tooltip');
 				if (!tooltipEl) {
                     tooltipEl = document.createElement('div');
                     tooltipEl.id = 'chartjs-tooltip';
-                    tooltipEl.innerHTML = '<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ';
+                    tooltipEl.innerHTML = '<blockquote class="twitter-tweet"><pjlang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ';
                     twttr.widgets.load() //Initialize twitter widget to style correctly
 					document.body.appendChild(tooltipEl);
                 }
 				
 				
+				tooltipEl.classList.remove('above', 'below', 'no-transform'); //Change position of tweet so it does not run off screen
+				if (tooltip.yAlign) {
+					tooltipEl.classList.add(tooltip.yAlign);
+				} else {
+					tooltipEl.classList.add('no-transform');
+				}
+				
+				
+				
+				if (tooltip.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                }
+				
+				var position = this._chart.canvas.getBoundingClientRect();
+				tooltipEl.style.opacity = 1;
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltip.caretX + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltip.caretY + 'px';
+				tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+                tooltipEl.style.pointerEvents = 'none';
 			}
+				
+				
 			
 		},
 		legend: {
@@ -112,17 +135,6 @@ function set_chart_data(req_url) {
 		}																				
 		console.log(price_list);
 		a(price_list, 0.01);
-<<<<<<< HEAD
-		image = new Image();
-		image.src = 'head.png';
-		image.setAttribute('width','30px');
-		image.setAttribute('height','30px');
-		pointStyle[20] = image;
-		//pointBorderColor[20] = "red";
-		//pointBackgroundColor[20] = "red";
-		chart.update();
-=======
->>>>>>> 845dfd48295b47f03a0dc284fbe70ca142ae74da
 	});
 }
 

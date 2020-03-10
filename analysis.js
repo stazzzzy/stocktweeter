@@ -29,17 +29,17 @@ function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 =
 
 		time_series.forEach(function(item, index) {
 			current = item.value;
-			console.log("Current: " + item.value);
+			//console.log("Current: " + item.value);
 			if (index < time_series.length - 1) {
-				console.log("Next: " + time_series[index + 1].value);
+				//console.log("Next: " + time_series[index + 1].value);
 				next = time_series[index+1].value;
 			}
 
 			DecimalChange = Math.abs((next - current) / current);
-			console.log(DecimalChange);
+			//console.log(DecimalChange);
 
 			if(DecimalChange >= threshold){
-				addTrump(index-1);
+				addTrump(index+1);
 			}
 		});
 

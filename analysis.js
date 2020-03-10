@@ -27,12 +27,30 @@ function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 =
 			}
 		});
 
-	for (var key in time_series) {
-		let cur = time_series[key].value;
-		let next = time_series[key+1].value;
+		time_series.forEach(function(item, index) {
+			current = item.value;
+			console.log("Current: " + item.value);
+			if (index < time_series.length - 1) {
+				console.log("Next: " + time_series[index + 1].value);
+				next = time_series[index+1].value;
+			}
 
-		console.log(cur);
-		console.log(next);
-	}
+			DecimalChange = Math.abs((next - current) / current);
+			console.log(DecimalChange);
+
+			if(DecimalChange >= threshold){
+				addTrump(index-1);
+			}
+		});
+
+		
+
+	// for (var key in time_series) {
+	// 	let cur = time_series[key].value;
+	// 	let next = time_series.indexOf(key) + 1;
+	// 	let next_day = time_series[next].value;
+
+	// 	console.log(cur);
+	// 	console.log(next);
 }
 

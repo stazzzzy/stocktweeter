@@ -39,7 +39,7 @@ function a(time_series, threshold) { // Threshhold should be a float (i.e. .05 =
 			console.log(DecimalChange);
 
 			if(DecimalChange >= threshold){
-				addTrump(index-1);
+				addTrump(index+1);
 			}
 		});
 

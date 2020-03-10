@@ -114,17 +114,16 @@ function set_chart_data(req_url) {
 		}																				
 		console.log(price_list);
 		a(price_list, 0.01);
-		image = new Image();
-		image.src = 'head.png';
-		image.setAttribute('width','30px');
-		image.setAttribute('height','30px');
-		pointStyle[20] = image;
-		showTooltips[20] = false;
-		console.log(showTooltips);
-		//pointBorderColor[20] = "red";
-		//pointBackgroundColor[20] = "red";
-		chart.update();
 	});
 }
 
-
+function addTrump(index){
+	image = new Image();
+	image.src = 'head.png';
+	image.setAttribute('width','30px');
+	image.setAttribute('height','30px');
+	pointStyle[index] = image;
+	//pointBorderColor[20] = "red";
+	//pointBackgroundColor[20] = "red";
+	chart.update();
+}

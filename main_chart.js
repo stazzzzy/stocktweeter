@@ -49,7 +49,7 @@ var chart = new Chart(ctx, {
 				if (!tooltipEl) {
                     tooltipEl = document.createElement('div');
                     tooltipEl.id = 'chartjs-tooltip';
-                    tooltipEl.innerHTML = '<blockquote class="twitter-tweet"><pjlang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ';
+                    tooltipEl.innerHTML = '<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Great news! American families will now be able to buy safer, more affordable, and environmentally friendly cars with our new SAFE VEHICLES RULE. Get rid of those old, unsafe clunkers. Build better and safer American cars and create American jobs. Buy American!</p>&mdash; Donald J. Trump (@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/1245076016965566464?ref_src=twsrc%5Etfw">March 31, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ';
                     twttr.widgets.load() //Initialize twitter widget to style correctly
 					document.body.appendChild(tooltipEl);
                 }
@@ -134,7 +134,17 @@ function set_chart_data(req_url) {
 			addData(chart,key.toString().split(" ")[0],pi); // we do not even need the key value pairs anymore
 		}																				
 		console.log(price_list);
-		a(price_list, 0.01);
+
+		if(price_list[0] > 200){
+			threshold = 0.03;
+		}
+		else if (price_list[0] > 100) {
+			threshold = 0.05;
+		} else {
+			threshold = 0.075;
+		}
+
+		a(price_list, threshold);
 	});
 }
 

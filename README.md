@@ -1,8 +1,12 @@
 # Trump Tweet+Stock Market Tracker
 
-Current plans include:
-  - Implement ticker selection via drop/down menu and user input
-  - Linked embedded tweets
-  - Graph overhaul
-  - Create a simplistic HTML layout
-  - Major backend development in JS
+![example](example.png)
+
+NOTE
+The current implementation of this project is strictly unconventional, the code here requires your browser to be modified to allow cross site requests (CORS). You can do this with an [extension.](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/)
+
+Planned features:
+  - Full backend implementation
+  - Graph scalability
+  - Cleaner UI
+  - Twitter API hook

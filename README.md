@@ -10,3 +10,5 @@ Planned features:
   - Graph scalability
   - Cleaner UI
   - Twitter API hook
+
+Read the full report [here.](https://github.com/stazzzzy/stocktweeter/raw/master/project_report.docx)
